@@ -1,0 +1,52 @@
+<div class="container title_form" >
+  <% if flash[:notice] %>
+      <div id="notice" class="alert alert-success"><%= flash[:notice] %></div>
+  <% end %>
+
+  <%= form_for(setup_product(@product)) do |f| %>
+      <% if @product.errors.any? %>
+          <div class="alert alert-error">
+            <h5>Error:</h5>
+            <ul>
+              <% @product.errors.full_messages.each do |msg| %>
+                  <li><%= msg %></li>
+              <% end %>
+            </ul>
+          </div>
+      <% end %>
+      <ul>
+      <%= f.fields_for :catalog_products do |ff| %>
+        <div>
+          <%= ff.check_box :_destroy,
+                {:checked => ff.object.persisted?},
+                '0', '1'
+          %>
+          <%= ff.object.catalog.name %>
+          <%= ff.hidden_field :catalog_id %>
+        </div>
+      <% end %>
+      </ul>
+      <%= f.fields_for :product_picture do |pff| %>
+          <div>
+              <%= pff.label :url %>
+              <%= pff.file_field :url %>
+          </div>
+      <% end %>
+
+      <div class="field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <%= f.label :description %>
+        <%= f.text_area :description, :rows => "3" %>
+      </div>
+      <div class="field">
+        <%= f.label :price %>
+        <%= f.text_field :price %>
+      </div>
+      <div class="actions">
+        <%= f.submit %>
+      </div>
+    <% end %>
+</div>

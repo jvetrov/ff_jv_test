@@ -1,0 +1,40 @@
+<table width="100%">
+  <tr>
+    <% if flash[:notice] %>
+        <div id="notice" class="alert alert-success"><%= flash[:notice] %></div>
+    <% end %>
+
+    <% count=0 %>
+    <% @products.each do |product| %>
+      <%# count is used properly build table %>
+      <% count+=1  %>
+      <td style="text-align: center; width: auto">
+            <% if product.product_picture && !product.product_picture.url.blank? %>
+                <%# clicking on image will open popup window with product details %>
+                <%= link_to( image_tag( product.product_picture.url, :size => "150x150" ), product, :remote => true, :class => "modal_link" )  %>
+            <% else %>
+                <%= link_to( image_tag("/no_picture.jpg", :size => "150x150" ), product, :remote => true, :class => "modal_link" ) %>
+            <% end %>
+
+            <br/><%= product.name %>
+            <br/><b>$<%= product.price %></b>
+            <%# if user is logged in he'll have options to edit or delete product %>
+            <%if session[:user_id]%>
+                <br/><%= link_to 'Edit', edit_product_path(product) %>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %>
+            <% end %>
+            <br/>&nbsp;
+
+      </td>
+      <% if count>=4 %>
+          <tr></tr>
+          <% count=0 %>
+      <% end %>
+    <% end %>
+
+</td></tr>
+<tr><td colspan="4">
+  <div class="offset4">
+        <%= will_paginate @products, :class=>'digg_pagination' %>
+  </div>
+</td></tr>
+</table>

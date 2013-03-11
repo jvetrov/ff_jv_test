@@ -1,0 +1,17 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @catalog.name %>
+</p>
+
+<ol class="products">
+  <% @catalog.products.each do |product| %>
+     <li>
+        <%= product.name %>
+     </li>
+    <% end %>
+</ol>
+<% render 'products/showProducts' %>
+<%= link_to 'Edit', edit_catalog_path(@catalog) %> |
+<%= link_to 'Back', catalogs_path %>

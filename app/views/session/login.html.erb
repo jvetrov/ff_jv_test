@@ -1,0 +1,42 @@
+<% @page_title = "Login" %>
+<span class="tl-text-line" height="25px">
+     <h4 class="tl-title">
+        <span class="tl-line" > login </span>
+     </h4>
+</span>
+
+<div class="container title_form" id="login_form">
+    <% if flash[:notice] %>
+        <div id="notice" class="<%= flash[:class] %>"><%= flash[:notice] %></div>
+        <% flash.delete(:notice) %>
+    <% end %>
+
+    <%= form_tag :action => 'login_attempt' do %>
+      <fieldset  >
+
+        <div class="control-group">
+          <!-- Username -->
+          <label class="control-label"  for="username">Username</label>
+          <div class="controls">
+            <%= text_field_tag (:login_username) %>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <!-- Password-->
+          <label class="control-label" for="password">Password</label>
+          <div class="controls">
+            <%= password_field_tag (:login_password) %>
+          </div>
+        </div>
+
+
+        <div class="control-group">
+          <!-- Button -->
+          <div class="controls">
+            <%= submit_tag ("Login"), :class=>"btn btn-success" %>
+          </div>
+        </div>
+      </fieldset>
+    <% end %>
+</div>

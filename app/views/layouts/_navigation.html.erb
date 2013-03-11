@@ -1,0 +1,41 @@
+  <table width="100%">
+    <tr>
+      <td>
+        <h2 style="color: white">
+          WAREHOUSE
+        </h2>
+      </td>
+      <td>
+        <%unless session[:user_id]%>
+            <ul class="nav pull-right">
+              <li><%= link_to :Register , :register, class: "nav_links" %></li>
+              <li><%= link_to :Login , :login, class: "nav_links" %></li>
+            </ul>
+        <%else%>
+            <ul class="nav pull-right">
+              <% if session[:role_id]==1 %>
+                 <li><%= link_to 'Edit users', :users, class: "nav_links" %></li>
+              <% end %>
+
+              <li><%= link_to 'New Product', new_product_path, class: "nav_links" %></li>
+              <li><%= link_to "Edit profile", :profile, class: "nav_links" %></li>
+              <li><%= link_to :Logout , :logout, class: "nav_links" %></li>
+            </ul>
+        <%end%>
+      </td>
+  </tr>
+  <tr>
+    <td colspan="2">
+        <ul class="nav nav-pills">
+            <li class="">
+              <%= link_to 'products', products_path %>
+            </li>
+            <% for catalog in Catalog.all %>
+                <li class="">
+                    <%= link_to catalog.name, products_path(:catalog=>catalog) %>
+                </li>
+            <% end %>
+        </ul>
+      </td>
+  </tr>
+</table>
